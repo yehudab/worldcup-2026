@@ -78,6 +78,38 @@ ALIASES = {
     "פנמה": "Panama",
 }
 
+# FIFA 3-letter country codes -> canonical name. Each is a single shell-safe
+# token (no spaces, no '&'), so the bot can refer to any team — including the
+# multi-word ones — without quoting headaches.
+CODES = {
+    # Group A
+    "mex": "Mexico", "rsa": "South Africa", "kor": "South Korea", "cze": "Czech Republic",
+    # Group B
+    "can": "Canada", "bih": "Bosnia & Herzegovina", "qat": "Qatar", "sui": "Switzerland",
+    # Group C
+    "bra": "Brazil", "mar": "Morocco", "hai": "Haiti", "sco": "Scotland",
+    # Group D
+    "usa": "USA", "par": "Paraguay", "aus": "Australia", "tur": "Turkey",
+    # Group E
+    "ger": "Germany", "cuw": "Curaçao", "civ": "Ivory Coast", "ecu": "Ecuador",
+    # Group F
+    "ned": "Netherlands", "jpn": "Japan", "swe": "Sweden", "tun": "Tunisia",
+    # Group G
+    "bel": "Belgium", "egy": "Egypt", "irn": "Iran", "nzl": "New Zealand",
+    # Group H
+    "esp": "Spain", "cpv": "Cape Verde", "ksa": "Saudi Arabia", "uru": "Uruguay",
+    # Group I
+    "fra": "France", "sen": "Senegal", "irq": "Iraq", "nor": "Norway",
+    # Group J
+    "arg": "Argentina", "alg": "Algeria", "aut": "Austria", "jor": "Jordan",
+    # Group K
+    "por": "Portugal", "cod": "DR Congo", "uzb": "Uzbekistan", "col": "Colombia",
+    # Group L
+    "eng": "England", "cro": "Croatia", "gha": "Ghana", "pan": "Panama",
+}
+
+ALIASES.update(CODES)
+
 
 def resolve(query, known):
     """Return the canonical team name from ``known`` that ``query`` refers to.

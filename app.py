@@ -138,6 +138,7 @@ def team_schedule():
 
 
 @app.get("/fixture")
+@app.get("/predict")  # "predict" is an accepted synonym for "fixture"
 def fixture():
     year = _year()
     raw1, raw2 = request.args.get("team1"), request.args.get("team2")
