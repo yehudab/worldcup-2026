@@ -39,6 +39,23 @@ def parse_kickoff(date_str, time_str):
     return out
 
 
+def israel_time(utc_iso):
+    """Convert a UTC ISO timestamp to Israel local time + date.
+
+    World Cups are summer tournaments, so Israel is always UTC+3 (IDT) — a fixed
+    offset, no tz database needed. Returns ``("HH:MM", "DD/MM/YYYY")`` in Israel
+    time, or ``(None, None)`` if there's no UTC time.
+    """
+    if not utc_iso:
+        return None, None
+    try:
+        dt = datetime.fromisoformat(utc_iso)
+    except ValueError:
+        return None, None
+    il = dt.astimezone(timezone(timedelta(hours=3)))
+    return il.strftime("%H:%M"), il.strftime("%d/%m/%Y")
+
+
 def _winner(team1, team2, score):
     """Return the winning team name, 'draw', or None (not finished)."""
     if not score:
@@ -63,6 +80,7 @@ def normalize_match(m, year=None):
     score = m.get("score")
     finished = bool(score and score.get("ft"))
     kickoff = parse_kickoff(m.get("date"), m.get("time"))
+    time_il, date_il = israel_time(kickoff["utc"])
     return {
         "year": year,
         "round": m.get("round"),
@@ -71,6 +89,8 @@ def normalize_match(m, year=None):
         "time_local": kickoff["local"],
         "time_utc": kickoff["utc"],
         "utc_offset": kickoff["offset"],
+        "time_israel": time_il,
+        "date_israel": date_il,
         "team1": m.get("team1"),
         "team2": m.get("team2"),
         "ground": m.get("ground"),
